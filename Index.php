@@ -41,10 +41,10 @@
                             <option value="es">Spanish</option>
                         </select>
                     </span>
-                    <form action="Controllers/UsuariosController.php?action=login" method="post" class="mx-4">
+                    <form action="Controllers/UsersController.php?action=login" method="post" class="mx-4">
                         <input type="submit" class="btn btn-light" value="Login" >
                     </form>
-                    <form action="Controllers/UsuariosController.php?action=signup" method="post">
+                    <form action="Controllers/UsersController.php?action=signup" method="post">
                         <input type="submit" class="btn btn-dark" value="Sign Up">
                     </form>
                 </div>

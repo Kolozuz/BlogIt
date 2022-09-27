@@ -5,7 +5,7 @@
     require '../Models/User.php';
     // $nombre = $_POST['username_login'];
 
-    class UsuariosController extends User{
+    class UsersController extends User{
 
         public function RedirectStart(){
             // header('Location: ../Views/Usuario/CursosUsuario.php');
@@ -38,8 +38,8 @@
             include_once '../Views/Usuario/SignUp.php';
         }
 
-        public function RedirectPerfil() {     
-            include_once '../Views/Usuario/PerfilUsuario.php'; 
+        public function RedirectProfile() {     
+            include_once '../Views/Usuario/Profile.php'; 
         }
 
         public function RedirectConfig(){
@@ -52,7 +52,7 @@
             echo "alert('Perfil Borrado')";
             echo '</script>';
             echo '<style>body{text-align:center; font-family: Ubuntu, sans-serif;}</style><span style="text-align:center;font-size: 50px; font-weight:bold;">Click ';
-            echo '<a href="UsuariosController.php?action=index"> aqui </a> ';
+            echo '<a href="UsersController.php?action=index"> aqui </a> ';
             echo ' para volver al inicio</span>';
 
             // $this->Redir();
@@ -100,7 +100,7 @@
                     $_SESSION['fecha_register'] = $user_u->creation_u;
                     $_SESSION['email_register'] = $user_u->email_u;
 
-                    // header('Location: UsuariosController.php?action=start'); 
+                    // header('Location: UsersController.php?action=start'); 
                     echo '<script type="text/javascript">';
                     echo "alert('Sesion iniciada con exito')";
                     echo '</script>';
@@ -130,7 +130,7 @@
             $email_u = $_POST['email_update'];
             $personas = $this->UpdateUser($id_u,$username_u,$email_u);
 
-            header('Location: UsuariosController.php?action=perfil'); 
+            header('Location: UsersController.php?action='); 
 
             // $this->RedirectPerfil();
             // foreach($personas as $updateperson){}
@@ -146,76 +146,76 @@
 
     //TOMAR ACTION PARA REDIRECCIONAR
     if(isset($_GET['action']) && $_GET['action'] == 'start'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectStart();
     }
     
     //Index
     if(isset($_GET['action']) && $_GET['action'] == 'index'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectIndex();
     }
 
     //Perfil
-    if(isset($_GET['action']) && $_GET['action'] == 'perfil'){
-        $userscontroller = new UsuariosController();
-        $userscontroller->RedirectPerfil();
+    if(isset($_GET['action']) && $_GET['action'] == 'profile'){
+        $userscontroller = new UsersController();
+        $userscontroller->RedirectProfile();
     }
 
     //Configuracion
     if(isset($_GET['action']) && $_GET['action'] == 'config'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectConfig();
     }
 
     //Registro
     if(isset($_GET['action']) && $_GET['action'] == 'signup'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectSignUp();
     }
 
     //Inicio de Sesion
     if(isset($_GET['action']) && $_GET['action'] == 'login'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectLogin();
     }
 
     //Cerrar Sesion
     if(isset($_GET['action']) && $_GET['action'] == 'logout'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->RedirectIndex($alert);
     }
 
     //Eliminar Cuenta
     if(isset($_GET['action']) && $_GET['action'] == 'delete'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->DeletePerfil();
         session_destroy();
     }
 
     //Actualizar Cuenta
     if(isset($_GET['action']) && $_GET['action'] == 'update'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->Update();
         // session_destroy();
     }
 
     //TOMAR DATOS DE REGISTRO DESDE EL FORMULARIO Y GUARDARLOS EN LA DB, ENCRIPTANDO LA CONTRASEÑA
     if(isset($_POST['action']) && $_POST['action'] == 'signup'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $contrasenaencripted = password_hash($_POST['password_signup'],PASSWORD_ARGON2ID);
         $userscontroller->ListInformation($_POST['email_signup'], $_POST['username_signup'], $contrasenaencripted);
     }
 
     //COMPROBAR DATOS DE INICIO DE SESION
     if(isset($_POST['action']) && $_POST['action'] == 'login'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->VerifyLogin($_POST['username_login'], $_POST['password_login']);
     }
 
     //COSAS QUE DEBEN ESTAR EN EL CURSOCONTROLLER
     if(isset($_GET['curso']) && $_GET['curso'] == 'html5'){
-        $userscontroller = new UsuariosController();
+        $userscontroller = new UsersController();
         $userscontroller->Redirecthtml5();
     }
 

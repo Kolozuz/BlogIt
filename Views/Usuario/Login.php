@@ -22,7 +22,7 @@
 <body class="bg-dark text-light">
     <div class="container-fluid text-center my-auto">
         <div class="container">
-            <form action="UsuariosController.php" method="post" >
+            <form action="UsersController.php" method="post" >
                 <div class="row my-4">
                     <h2>Log In</h2>
                 </div>

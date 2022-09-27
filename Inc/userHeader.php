@@ -19,7 +19,7 @@
 
     <title>Blog-It</title>
 </head>
-<body class="bg-dark">
+<body class="bg-dark text-light">
     <header class="bg-light">
         <nav class="navbar navbar-expand-sm ">
             <div class="container-fluid">
@@ -41,7 +41,7 @@
                             <option value="es">Spanish</option>
                         </select>
                     </span>
-                    <a href="UsuariosController?action=profile">
+                    <a href="UsersController.php?action=profile">
                         <img src="../Public/Img/pfpsunken+.png" alt="" class="rounded-circle" width="65vh">
                     </a>
                 </div>
