@@ -1,4 +1,7 @@
-<?php include_once '../Inc/userHeader.php' ?>
+<?php include_once '../Inc/userHeader.php';
+    // var_dump($userinfo);
+
+ ?>
 
 
 <div class="container-fluid text-center my-4">

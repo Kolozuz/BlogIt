@@ -2,7 +2,7 @@
     session_start();
     
     //Variables de Sesion
-    require '../Models/User.php';
+    include '../Models/User.php';
     // $nombre = $_POST['username_login'];
 
     class UsersController extends User{
@@ -15,15 +15,16 @@
             if(empty($_SESSION['username_login'])){
 
                 session_destroy();
-                die ('No has iniciado sesion');
+
+                echo ('No has iniciado sesion');
                 return;
             }
 
             else{
-                // echo '<script type="text/javascript">';
-                // echo "alert('Sesion iniciada con exito')";
-                // echo '</script>';
                 // var_dump($userinfo);
+                    echo '<script type="text/javascript">';
+                    echo "alert('Sesion iniciada con exito')";
+                    echo '</script>';
                 include_once '../Views/Usuario/MyBlogs.php';
             }
             
@@ -38,30 +39,55 @@
             include_once '../Views/Usuario/SignUp.php';
         }
 
-        public function RedirectProfile() {     
+        public function RedirectProfile() { 
+            // $userscontroller = new UsersController();
+            // $userscontroller->CheckUserFromDB();
+            // $userinfo = $this->CheckUserFromDB();
+            // return $userinfo;
+            // foreach ($userinfo as $user_u){}
+            // var_dump($userinfo);
             include_once '../Views/Usuario/Profile.php'; 
         }
 
-        public function RedirectConfig(){
-            include_once '../Views/Usuario/ConfigUsuario.php'; 
+        public function RedirectUpdate(){
+            $id_u = $_GET['id'];
+            $username_u = $_POST['username_update'];
+            $email_u = $_POST['email_update'];
+            $this->UpdateUser($id_u,$username_u,$email_u);
+
+            $userinfo = $this->CheckUserForUpdate($email_u,$username_u);
+            foreach ($userinfo as $user_u){}
+
+            
+            // header('Location: UsersController.php?action=update'); 
+            $this->RedirectProfile();
+            // foreach($personas as $updateperson){}
+            // session_reset();
+            // $_SESSION['username_login'] = $updateperson->username_u;
+            // $_SESSION['email_register'] = $updateperson->email_u;
+
         }
 
-        public function DeletePerfil(){
-            $this->DeleteUsuario();
+        public function RedirectDelete($id_u){
+            $this->DeleteUser($id_u);
             echo '<script type="text/javascript">';
             echo "alert('Perfil Borrado')";
             echo '</script>';
             echo '<style>body{text-align:center; font-family: Ubuntu, sans-serif;}</style><span style="text-align:center;font-size: 50px; font-weight:bold;">Click ';
             echo '<a href="UsersController.php?action=index"> aqui </a> ';
             echo ' para volver al inicio</span>';
-
-            // $this->Redir();
+            $this->RedirectStart();
         }
+
+        public function RedirectConfig(){
+            include_once '../Views/Usuario/ConfigUsuario.php'; 
+        }
+
         
         public function RedirectIndex(){
             header('Location: ../index.php');
         }
-
+        
         public function Redirecthtml5(){
             include_once '../Views/Cursos/html5.php';
         }
@@ -70,10 +96,10 @@
             
             $this->email_u = $email_u;
             $this->username_u = $username_u;
-            $this->password_u = $contrasenaencripted;
-            echo 'success';            
+            $this->password_u = $contrasenaencripted;      
             $this->SaveUser();
-            $this->RedirectIndex();
+            
+            // $this->RedirectIndex();
             // $userinfo = $this->CheckUsuarioFromDB();
             // foreach ($userinfo as $user_u){}
             // if
@@ -100,11 +126,11 @@
                     $_SESSION['fecha_register'] = $user_u->creation_u;
                     $_SESSION['email_register'] = $user_u->email_u;
 
-                    // header('Location: UsersController.php?action=start'); 
-                    echo '<script type="text/javascript">';
-                    echo "alert('Sesion iniciada con exito')";
-                    echo '</script>';
-                    $this->RedirectStart();
+                    
+                    header('Location: UsersController.php?action=start');
+                    // $this->RedirectStart();
+                    return $userinfo;
+                    // $this->RedirectProfile();
             }
 
             else{
@@ -114,7 +140,7 @@
 
                 echo '<script type="text/javascript">';
                 echo 'document.write("';
-                echo "<div class='container-fluid bg-primario'>¿Eres nuevo en Jujomi? <br> Haz click";
+                echo "<div class='container-fluid bg-primario'>¿Eres nuevo en Blog-It? <br> Haz click";
                 echo "<a class='btn bg-secundario shadow-sm' data-bs-toggle='modal' data-bs-target='#Registerpopup'>Aqui</a> para volver al index y registrarte </div>";
                 echo '")</script>';
                 // $this->RedirectIndex();
@@ -124,21 +150,6 @@
 
         }
 
-        public function Update(){
-            $id_u = $_POST['id_u'];
-            $username_u = $_POST['username_update'];
-            $email_u = $_POST['email_update'];
-            $personas = $this->UpdateUser($id_u,$username_u,$email_u);
-
-            header('Location: UsersController.php?action='); 
-
-            // $this->RedirectPerfil();
-            // foreach($personas as $updateperson){}
-            // session_reset();
-            // $_SESSION['username_login'] = $updateperson->username_u;
-            // $_SESSION['email_register'] = $updateperson->email_u;
-
-        }
         
 
         
@@ -189,14 +200,15 @@
     //Eliminar Cuenta
     if(isset($_GET['action']) && $_GET['action'] == 'delete'){
         $userscontroller = new UsersController();
-        $userscontroller->DeletePerfil();
+        $id_u = $_GET['id'];
+        $userscontroller->RedirectDelete($id_u);
         session_destroy();
     }
 
     //Actualizar Cuenta
     if(isset($_GET['action']) && $_GET['action'] == 'update'){
         $userscontroller = new UsersController();
-        $userscontroller->Update();
+        $userscontroller->RedirectUpdate();
         // session_destroy();
     }
 
