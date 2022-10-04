@@ -7,16 +7,20 @@
 
     class UsersController extends User{
 
+    //Funciones de Redireccionamiento (o de inclusion mejor dicho)
+        public function RedirectIndex(){
+            header('Location: ../Index.php');
+        }
+
         public function RedirectStart(){
-            // header('Location: ../Views/Usuario/CursosUsuario.php');
+
             $userinfo = $this->CheckUserFromDB();
 
             foreach ($userinfo as $user_u){}
             if(empty($_SESSION['username_login'])){
-
                 session_destroy();
 
-                echo ('No has iniciado sesion');
+                die ('No has iniciado sesion');
                 return;
             }
 
@@ -58,14 +62,11 @@
             $userinfo = $this->CheckUserForUpdate($email_u,$username_u);
             foreach ($userinfo as $user_u){}
 
-            
-            // header('Location: UsersController.php?action=update'); 
             $this->RedirectProfile();
             // foreach($personas as $updateperson){}
             // session_reset();
             // $_SESSION['username_login'] = $updateperson->username_u;
             // $_SESSION['email_register'] = $updateperson->email_u;
-
         }
 
         public function RedirectDelete($id_u){
@@ -76,22 +77,14 @@
             echo '<style>body{text-align:center; font-family: Ubuntu, sans-serif;}</style><span style="text-align:center;font-size: 50px; font-weight:bold;">Click ';
             echo '<a href="UsersController.php?action=index"> aqui </a> ';
             echo ' para volver al inicio</span>';
-            $this->RedirectStart();
+            $this->RedirectIndex();
         }
 
         public function RedirectConfig(){
             include_once '../Views/Usuario/ConfigUsuario.php'; 
         }
 
-        
-        public function RedirectIndex(){
-            header('Location: ../index.php');
-        }
-        
-        public function Redirecthtml5(){
-            include_once '../Views/Cursos/html5.php';
-        }
-
+    //Funcion de Registro
         public function ListInformation($email_u,$username_u,$contrasenaencripted){
             
             $this->email_u = $email_u;
@@ -100,6 +93,7 @@
             $this->SaveUser();
             
             // $this->RedirectIndex();
+            //
             // $userinfo = $this->CheckUsuarioFromDB();
             // foreach ($userinfo as $user_u){}
             // if
@@ -107,6 +101,7 @@
             // $_SESSION['email_register'] = $user_u->email_u;
         }
 
+    //Funcion de Inicio de Sesion
         public function VerifyLogin($username_u,$password_u){
             // ini_set('display_errors', 0);
             // ini_set('display_startup_errors', 0);
@@ -128,9 +123,7 @@
 
                     
                     header('Location: UsersController.php?action=start');
-                    // $this->RedirectStart();
                     return $userinfo;
-                    // $this->RedirectProfile();
             }
 
             else{
@@ -156,11 +149,13 @@
     }
 
     //TOMAR ACTION PARA REDIRECCIONAR
+
+    //StartPage
     if(isset($_GET['action']) && $_GET['action'] == 'start'){
         $userscontroller = new UsersController();
         $userscontroller->RedirectStart();
     }
-    
+
     //Index
     if(isset($_GET['action']) && $_GET['action'] == 'index'){
         $userscontroller = new UsersController();
@@ -192,10 +187,10 @@
     }
 
     //Cerrar Sesion
-    if(isset($_GET['action']) && $_GET['action'] == 'logout'){
-        $userscontroller = new UsersController();
-        $userscontroller->RedirectIndex($alert);
-    }
+    // if(isset($_GET['action']) && $_GET['action'] == 'logout'){
+    //     $userscontroller = new UsersController();
+    //     $userscontroller->RedirectIndex($alert);
+    // }
 
     //Eliminar Cuenta
     if(isset($_GET['action']) && $_GET['action'] == 'delete'){
@@ -223,12 +218,6 @@
     if(isset($_POST['action']) && $_POST['action'] == 'login'){
         $userscontroller = new UsersController();
         $userscontroller->VerifyLogin($_POST['username_login'], $_POST['password_login']);
-    }
-
-    //COSAS QUE DEBEN ESTAR EN EL CURSOCONTROLLER
-    if(isset($_GET['curso']) && $_GET['curso'] == 'html5'){
-        $userscontroller = new UsersController();
-        $userscontroller->Redirecthtml5();
     }
 
 ?> 

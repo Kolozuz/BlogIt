@@ -29,8 +29,14 @@
             $insert->bindParam(2,$this->username_u);
             $insert->bindParam(3,$this->password_u);
             $insert->execute();
-            echo 'Success, your username is: ';      
-            echo $this->username_u;
+            echo "<body class='container bg-dark justify-content-middle'>" ;
+            echo "<link rel='stylesheet' href='../Public/Css/bootstrap.min.css'> ";
+            echo '<div class="container-fluid text-center text-light bg-dark">';
+            echo 'Success, your username is: ' . $this->username_u;
+            echo "<br> You can click <a href='UsersController.php?action=login' class='btn btn-success'>here<a/> to Login or ";
+            echo "<br> click <a href='UsersController.php?action=index' class='btn btn-warning'>here<a/> to go back to the index";    
+            echo "</div>";  
+            echo "</body>" ;
             return;
         }
         
@@ -91,37 +97,7 @@
             echo "alert('Your info was succesfully updated')";
             echo '</script>';
             return $personas;
-
-                
-
         }
-
-        // public function updateEmailModel($id_u,$email_u){
-        //     $connection = new Connection();
-            
-        //     $sql = "UPDATE tbl_user SET email_u='$email_u' WHERE id_u = '$id_u'";
-
-        //     $update = $connection->stm->prepare($sql);
-        //     $update->execute();
-
-        //     $personas = $update->fetchAll(PDO::FETCH_OBJ);
-            
-        //     return $personas;
-        // }
-
-        // public function updateEmail($id_u,$email_u){
-        //     $connection = new Connection();
-            
-        //     $sql = "UPDATE tbl_user SET email_u='$email_u' WHERE id_u = '$id_u'";
-
-        //     $update = $connection->stm->prepare($sql);
-        //     $update->execute();
-
-        //     $personas = $update->fetchAll(PDO::FETCH_OBJ);
-            
-        //     return $personas;
-        // }
-
 
         public function DeleteUser($id_u){
             $connection = new Connection();
@@ -130,7 +106,7 @@
             
             $id_u = $_GET['id'];
             
-            $sql = "DELETE FROM user WHERE id_u = '$id_u'";
+            $sql = "DELETE FROM tbl_user WHERE id_u = '$id_u'";
 
             $delete = $connection->stm->prepare($sql);
             $delete->execute();

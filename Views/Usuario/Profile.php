@@ -103,7 +103,7 @@ include '../Inc/userHeader.php';
             icon: "success",
         });
         setTimeout(function () {
-            location.href = 'UsersController.php?action=delete?id=' + "<?php echo $_SESSION['id_register'] ?>";}, 1500); 
+            location.href = 'UsersController.php?action=delete&id=' + "<?php echo $_SESSION['id_register'] ?>";}, 1500); 
         } else {swal("Profile wasn't deleted!");}
     });
 }
