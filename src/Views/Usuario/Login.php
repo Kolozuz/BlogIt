@@ -40,7 +40,7 @@
                 <div class="row my-4">
                     <div class="col">
                         <input type="submit" class="btn btn-success" value="Submit">
-                        <a href="../Index.php" class="btn btn-warning">Volver</a>
+                        <a href="../index.php" class="btn btn-warning">Volver</a>
                     </div>
                 </div>
             </form>

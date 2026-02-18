@@ -9,7 +9,7 @@
 
     //Funciones de Redireccionamiento (o de inclusion mejor dicho)
         public function RedirectIndex(){
-            header('Location: ../Index.php');
+            header('Location: ../index.php');
         }
 
         public function RedirectStart(){
