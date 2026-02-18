@@ -1,0 +1,36 @@
+services:
+  php:
+    image: php:8.2.30-apache
+    container_name: blogit-php_apache
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+  db:
+    image: mariadb
+    container_name: blogit-db
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: blogit-phpmyadmin
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
